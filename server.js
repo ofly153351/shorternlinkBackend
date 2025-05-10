@@ -7,7 +7,7 @@ const allroute = require('./src/routes/route');
 const PORT = process.env.PORT || 3001;
 
 app.use(cors({
-    origin: 'http://localhost:3000',
+    origin: 'https://shorternurlreact-1.onrender.com',
     credentials: true
 }));
 
@@ -15,5 +15,5 @@ app.use(express.json());
 app.use('/', allroute);
 
 app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
+    console.log(`Server running on port ${PORT}`);
 });
