@@ -5,6 +5,11 @@ const prisma = require('../lib/prisma');
 exports.createUser = async (req, res) => {
     const { userName, password } = req.body;
 
+    // ตรวจสอบว่าค่าถูกส่งมาหรือไม่
+    if (!userName || !password) {
+        return res.status(400).json({ error: 'Username and password are required' });
+    }
+
     try {
         const existingUser = await prisma.user.findUnique({
             where: { userName },
