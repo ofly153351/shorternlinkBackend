@@ -102,7 +102,7 @@ npm start
 
 - เซิฟเวอร์จะรันที่ http://localhost:3001
 - สามารถเข้าสู่ฐานข้อมูลได้โดย pgAdmin โดยการพิมพิ์ในช่อง url : http://localhost:5050/
-- email : admin@mail.com / password : admin123456
+- email : admin@mail.com / password : admin123456 (ตามไฟล์ที่ชื่อ docker-compose.yml)
 
 # 🔗 Links
 - **Client Repository:** [Short link client side](https://github.com/ofly153351/shorternUrlReact)
