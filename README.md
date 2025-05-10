@@ -67,8 +67,14 @@
 git clone https://github.com/ofly153351/shorternlinkBackend.git
 cd shorternlinkBackend
 ```
+## 2️⃣ Install Database by docker
 
-## 2️⃣ Install Dependencies
+```
+‼️(ต้องมี app Docker ก่อน)
+docker compose up -d --build 
+```
+
+## 3️⃣ Install Dependencies
 
 ```
 npm install
@@ -76,25 +82,27 @@ npm install
 # yarn install
 ```
 
-## 3️⃣ Setup Environment Variables
+## 4️⃣ Setup Environment Variables
 
 ```
 DATABASE_URL="your_database_url"
 ```
 
-## 4️⃣ Setup Database
+## 5️⃣ Setup Database
 
 ```
 npx prisma migrate dev --name init
 ```
 
-## 5️⃣ Start the Application
+## 6️⃣ Start the Application
 
 ```
 npm start
 ```
 
 - เซิฟเวอร์จะรันที่ http://localhost:3001
+- สามารถเข้าสู่ฐานข้อมูลได้โดย pgAdmin โดยการพิมพิ์ในช่อง url : http://localhost:5050/
+- email : admin@mail.com / password : admin123456
 
 # 🔗 Links
 - **Client Repository:** [Short link client side](https://github.com/ofly153351/shorternUrlReact)
