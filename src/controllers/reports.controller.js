@@ -1,63 +1,48 @@
 const e = require('express');
 const prisma = require('../lib/prisma');
 
-exports.getAllclcks = async (req, res) => {
-
-    const { historyId } = req.params;
-
-    try {
-        const result = await prisma.history.aggregate({
-            where: {
-                historyId: historyId
-            },
-            _sum: {
-                Clicked: true
-            }
-        });
-
-        res.status(200).json({ totalClicks: result._sum.Clicked || 0 });
-    } catch (error) {
-        console.error('Error getting total clicks:', error);
-        res.status(500).json({ error: 'Server error' });
-    }
-}
-
-exports.getAllLinksCount = async (req, res) => {
-    try {
-        const result = await prisma.history.aggregate({
-            _count: {
-                historyId: true
-            }
-        });
-
-        res.status(200).json({ totalLinks: result._count.historyId || 0 });
-    } catch (error) {
-        console.error('Error getting total links:', error);
-        res.status(500).json({ error: 'Server error' });
-    }
-}
-
-exports.todayLinksCount = async (req, res) => {
+exports.getReports = async (req, res) => {
     const today = new Date();
     const startOfDay = new Date(today.getFullYear(), today.getMonth(), today.getDate());
     const endOfDay = new Date(today.getFullYear(), today.getMonth(), today.getDate() + 1);
 
     try {
-        const result = await prisma.history.aggregate({
-            where: {
-                createdAt: {
-                    gte: startOfDay,
-                    lt: endOfDay
+        // ทำให้ทุกการดึงข้อมูลทำงานพร้อมกัน
+        const [totalClicks, totalLinks, totalLinksToday] = await Promise.all([
+            // ดึงจำนวนคลิกทั้งหมด
+            prisma.history.aggregate({
+                _sum: {
+                    Clicked: true
                 }
-            },
-            _count: {
-                historyId: true
-            }
-        });
+            }),
+            // ดึงจำนวนลิงก์ทั้งหมด
+            prisma.history.aggregate({
+                _count: {
+                    historyId: true
+                }
+            }),
+            // ดึงจำนวนลิงก์ที่ถูกคลิกในวันนี้
+            prisma.history.aggregate({
+                where: {
+                    createdAt: {
+                        gte: startOfDay,
+                        lt: endOfDay
+                    }
+                },
+                _count: {
+                    historyId: true
+                }
+            })
+        ]);
 
-        res.status(200).json({ totalLinksToday: result._count.historyId || 0 });
+        // ส่งข้อมูลทั้งหมดกลับไปยัง frontend
+        res.status(200).json({
+            totalClicks: totalClicks._sum.Clicked || 0,
+            totalLinks: totalLinks._count.historyId || 0,
+            totalLinksToday: totalLinksToday._count.historyId || 0
+        });
     } catch (error) {
-        console.error('Error getting total links for today:', error);
+        console.error('Error fetching reports:', error);
         res.status(500).json({ error: 'Server error' });
     }
 }

@@ -7,7 +7,7 @@ const allroute = require('./src/routes/route');
 const PORT = process.env.PORT || 3001;
 
 app.use(cors({
-    origin: 'https://shorternurlreact-1.onrender.com',
+    origin: ['https://shorternurlreact-1.onrender.com'],
     credentials: true,
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization']

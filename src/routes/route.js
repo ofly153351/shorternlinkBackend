@@ -14,9 +14,8 @@ router.post('/shorted', userController.createShortUrl)
 router.get('/myhistory/:userId', historyController.getHistory);
 
 //reports
-router.get('/click/:historyId', reportsController.getAllclcks);
-router.get('/linkscount', reportsController.getAllLinksCount);
-router.get('/todaylinks', reportsController.todayLinksCount);
+
+router.get('/getreports', reportsController.getReports)
 
 router.get('/clickthislinkcount', reportsController.getUserClicked)
 router.get('/allclickthislinkcount', reportsController.getAllClickedThisLink)
