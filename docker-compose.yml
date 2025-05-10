@@ -20,7 +20,7 @@ services:
     restart: unless-stopped
     environment:
       PGADMIN_DEFAULT_EMAIL:  admin@mail.com
-      PGADMIN_DEFAULT_PASSWORD: ofly153351
+      PGADMIN_DEFAULT_PASSWORD: admin123456
     ports:
       - "5050:80"
     depends_on:
